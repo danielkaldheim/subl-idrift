@@ -4,18 +4,18 @@
 /**
  *  ${1}
  *	${2:$TM_FILENAME}
- *	Created on ${3:01}.${4:01}.${5:2013}.
+ *	Created on ${3:${4:01}.${5:01}.${6:2013}}.
  *
- *	@author ${6:Daniel Rufus Kaldheim} <${7:daniel@idrift.no}>
- *	@copyright ${8:2012} - ${9:2013} ${10:iDrift Web AS}
+ *	@author ${7:Daniel Rufus Kaldheim} <${8:daniel@idrift.no}>
+ *	@copyright ${9:2012} - ${10:2013} ${11:iDrift Web AS}
  *	@version ${12:1.0.0}
  *
  */
 
 ${13}
 
-/* End of file ${TM_FILENAME:${1/(.+)/\l$1.php/}} */
-/* Location: ./${TM_FILEPATH/.+((?:content).+)/$1/:content/themes/${1/(.+)/\l$1.php/}} */
+/* End of file ${TM_FILENAME:${2/(.+)/\l$1.php/}} */
+/* Location: ./${TM_FILEPATH/.+((?:content).+)/$2/:content/themes/${2/(.+)/\l$1.php/}} */
 
 ?>
 ]]></content>
@@ -23,4 +23,6 @@ ${13}
 	<!-- <tabTrigger>hello</tabTrigger> -->
 	<!-- Optional: Set a scope to limit where the snippet will trigger -->
 	<!-- <scope>source.python</scope> -->
+	<!-- Optional: Description to show in the menu -->
+	<!-- <description>My Fancy Snippet</description> -->
 </snippet>
