@@ -1,0 +1,26 @@
+<snippet>
+	<content><![CDATA[
+<?php
+/**
+ *  ${1}
+ *	${2:$TM_FILENAME}
+ *	Created on ${3:01}.${4:01}.${5:2013}.
+ *
+ *	@author ${6:Daniel Rufus Kaldheim} <${7:daniel@idrift.no}>
+ *	@copyright ${8:2012} - ${9:2013} ${10:iDrift Web AS}
+ *	@version ${12:1.0.0}
+ *
+ */
+
+${13}
+
+/* End of file ${TM_FILENAME:${1/(.+)/\l$1.php/}} */
+/* Location: ./${TM_FILEPATH/.+((?:content).+)/$1/:content/themes/${1/(.+)/\l$1.php/}} */
+
+?>
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<!-- <tabTrigger>hello</tabTrigger> -->
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>
