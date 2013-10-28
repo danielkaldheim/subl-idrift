@@ -15,7 +15,7 @@
 ${13}
 
 /* End of file ${TM_FILENAME:${2/(.+)/\l$1.php/}} */
-/* Location: ./${TM_FILEPATH/.+((?:content).+)/$2/:content/themes/${2/(.+)/\l$1.php/}} */
+/* Location: ${TM_FILEPATH} */
 
 ?>
 ]]></content>
