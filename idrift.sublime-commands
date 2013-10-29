@@ -6,5 +6,9 @@
   {
     "caption": "Header: Set settings",
     "command": "promt_header"
+  },
+  {
+  	"caption": "Insert: functions.php",
+  	"command": "insert_functionsphp"
   }
 ]

@@ -23,7 +23,6 @@ class promt_headerCommand(sublime_plugin.WindowCommand):
 		try:
 			with open('data.json', 'rb') as fp:
 				self.settings = json.load(fp)
-			print self.settings
 		except IOError:
 			self.settings = get_gitconfig()
 			self.settings['company'] = 'iDrift Web AS'
@@ -51,8 +50,10 @@ class promt_headerCommand(sublime_plugin.WindowCommand):
 
 class insert_headerCommand(sublime_plugin.TextCommand):
 	settings = {'name' : '', 'email' : '', 'company' : 'iDrift Web AS', 'copy' : '2012'}
+	contents = ''
 
-	def run(self, edit):
+	def run(self, edit, contents = '${13}\n'):
+		self.contents = contents
 		try:
 			with open('data.json', 'rb') as fp:
 				self.settings = json.load(fp)
@@ -74,14 +75,17 @@ class insert_headerCommand(sublime_plugin.TextCommand):
 		self.settings['name'] = text
 		self.view.window().show_input_panel("Email", self.settings['email'], self.get_company, None, None)
 		pass
+
 	def get_company(self, text):
 		self.settings['email'] = text
 		self.view.window().show_input_panel("Company", self.settings['company'], self.get_copy, None, None)
 		pass
+
 	def get_copy(self, text):
 		self.settings['company'] = text
 		self.view.window().show_input_panel("Copyright", self.settings['copy'], self.on_done, None, None)
 		pass
+
 	def on_done(self, text):
 		self.settings['copy'] = text
 		with open('data.json', 'wb') as fp:
@@ -108,7 +112,9 @@ class insert_headerCommand(sublime_plugin.TextCommand):
 			content_copy        = ""
 		content_version         = " *	@version ${12:1.0.0}\n"
 		content_meta_end        = " *\n */\n\n"
-		content_content         = "${13}\n\n"
+
+		content_content         = "%s\n" % self.contents
+
 		content_end_of_file     = "/* End of file $2 */\n"
 		if self.view.file_name():
 			content_location    = "/* Location: ${TM_FILEPATH} */\n"
@@ -116,5 +122,5 @@ class insert_headerCommand(sublime_plugin.TextCommand):
 			content_location    = ""
 		content_end             = "\n?>\n"
 
-		content                 = "%s%s%s%s%s%s%s%s%s%s%s%s%s" % (content_syntax_open, content_meta_open, content_comment, content_file, content_date, content_author, content_copy, content_version, content_meta_end, content_content, content_end_of_file, content_location, content_end)
-		self.view.run_command("insert_snippet", { "contents": content })
+		snippet_content         = "%s%s%s%s%s%s%s%s%s%s%s%s%s" % (content_syntax_open, content_meta_open, content_comment, content_file, content_date, content_author, content_copy, content_version, content_meta_end, content_content, content_end_of_file, content_location, content_end)
+		self.view.run_command("insert_snippet", { "contents": snippet_content })
