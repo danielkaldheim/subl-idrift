@@ -1,0 +1,10 @@
+[
+  {
+    "caption": "Insert header",
+    "command": "insert_header"
+  },
+  {
+    "caption": "Promt header",
+    "command": "promt_header"
+  }
+]
