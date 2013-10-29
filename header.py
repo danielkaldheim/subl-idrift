@@ -91,17 +91,25 @@ class insert_headerCommand(sublime_plugin.TextCommand):
 	def insert(self):
 		now = datetime.datetime.now()
 
-		content_open        = "<?php\n/**\n *  ${1}\n *	${2:$TM_FILENAME}\n"
-		content_date        = " *	Created on ${3:${4:%d}.${5:%d}.${6:%d}}.\n *\n" % (now.day, now.month, now.year)
-		content_author      = " *	@author ${7:%s} <${8:%s}>\n" % (self.settings['name'], self.settings['email'])
+		content_syntax_open     = "<?php\n"
+		content_meta_open       = "/**\n"
+		content_comment         = " *	${1}\n"
+		content_file            = " *	${2:$TM_FILENAME}\n"
+		content_date            = " *	Created on ${3:${4:%d}.${5:%d}.${6:%d}}.\n *\n" % (now.day, now.month, now.year)
+		content_author          = " *	@author ${7:%s} <${8:%s}>\n" % (self.settings['name'], self.settings['email'])
 		if self.settings['copy']:
 			content_copy        = " *	@copyright ${9:%s} - ${10:%d} ${11:%s}\n" % (self.settings['copy'], now.year, self.settings['company'] if self.settings['company'] else self.settings['name'] )
 		else:
-			content_copy = ""
-		content_version     = " *	@version ${12:1.0.0}\n"
-		content_content     = " *\n */\n\n${13}\n\n"
-		content_end_of_file = "/* End of file ${TM_FILENAME:${2/(.+)/\l$1.php/}} */\n"
-		content_location    = "/* Location: ${TM_FILEPATH} */\n\n?>\n"
+			content_copy        = ""
+		content_version         = " *	@version ${12:1.0.0}\n"
+		content_meta_end        = " *\n */\n\n"
+		content_content         = "${13}\n\n"
+		content_end_of_file     = "/* End of file $2 */\n"
+		if self.view.file_name():
+			content_location    = "/* Location: ${TM_FILEPATH} */\n"
+		else:
+			content_location    = ""
+		content_end             = "\n?>\n"
 
-		content = "%s%s%s%s%s%s%s%s" % (content_open, content_date, content_author, content_copy, content_version, content_content, content_end_of_file, content_location)
+		content                 = "%s%s%s%s%s%s%s%s%s%s%s%s%s" % (content_syntax_open, content_meta_open, content_comment, content_file, content_date, content_author, content_copy, content_version, content_meta_end, content_content, content_end_of_file, content_location, content_end)
 		self.view.run_command("insert_snippet", { "contents": content })
