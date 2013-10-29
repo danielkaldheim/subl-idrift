@@ -91,6 +91,11 @@ class insert_headerCommand(sublime_plugin.TextCommand):
 	def insert(self):
 		now = datetime.datetime.now()
 
+		pt = self.view.text_point(0, 0)
+		self.view.sel().clear()
+		self.view.sel().add(sublime.Region(pt))
+		self.view.show(pt)
+
 		content_syntax_open     = "<?php\n"
 		content_meta_open       = "/**\n"
 		content_comment         = " *	${1}\n"
