@@ -62,7 +62,6 @@ class insert_headerCommand(sublime_plugin.TextCommand):
 			try:
 				with open('data.json', 'rb') as fp:
 					self.settings = json.load(fp)
-				print self.settings
 			except IOError:
 				self.settings = get_gitconfig()
 				self.settings['company'] = 'iDrift Web AS'
