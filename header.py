@@ -26,24 +26,44 @@ class promt_headerCommand(sublime_plugin.TextCommand):
 			self.gitconfig['company'] = 'iDrift Web AS'
 			self.gitconfig['copy'] = '2012'
 		else:
-			gitconfig = {'name' : '', 'email' : '', 'company' : 'iDrift Web AS', 'copy' : '2012'}
+			self.gitconfig = {'name' : '', 'email' : '', 'company' : 'iDrift Web AS', 'copy' : '2012'}
 
-		self.view.window().show_input_panel("Name", "Test", self.get_mail, None, None)
+		if self.settings.has('name'):
+			name = self.settings.get('name')
+		else:
+			name = self.gitconfig['name']
+
+		self.view.window().show_input_panel("Name", name, self.get_mail, None, None)
 		pass
 
 	def get_mail(self, text):
 		self.settings.set('name', text)
-		self.view.window().show_input_panel("Email", self.settings.get('email', self.gitconfig['email'] if self.gitconfig['email'] else ''), self.get_company, None, None)
+		if self.settings.has('email'):
+			email = self.settings.get('email')
+		else:
+			email = self.gitconfig['email']
+
+		self.view.window().show_input_panel("Email", email, self.get_company, None, None)
 		pass
 
 	def get_company(self, text):
 		self.settings.set('email', text)
-		self.view.window().show_input_panel("Company", self.settings.get('company', self.gitconfig['company'] if self.gitconfig['company'] else ''), self.get_copy, None, None)
+		if self.settings.has('company'):
+			company = self.settings.get('company')
+		else:
+			company = self.gitconfig['company']
+
+		self.view.window().show_input_panel("Company", company, self.get_copy, None, None)
 		pass
 
 	def get_copy(self, text):
 		self.settings.set('company', text)
-		self.view.window().show_input_panel("Copyright", self.settings.get('copy', self.gitconfig['copy'] if self.gitconfig['copy'] else ''), self.on_done, None, None)
+		if self.settings.has('copy'):
+			copy = self.settings.get('copy')
+		else:
+			copy = self.gitconfig['copy']
+
+		self.view.window().show_input_panel("Copyright", copy, self.on_done, None, None)
 		pass
 
 	def on_done(self, text):
