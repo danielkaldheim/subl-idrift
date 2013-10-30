@@ -1,4 +1,4 @@
-import sublime, sublime_plugin, insert_headerCommand
+import sublime, sublime_plugin, insert_header
 
 class insert_functionsphpCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
