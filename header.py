@@ -17,10 +17,11 @@ def get_gitconfig():
 
 class promt_headerCommand(sublime_plugin.TextCommand):
 
-	settings = sublime.load_settings("iDriftWeb.sublime-settings")
+
 	gitconfig = {}
 
 	def run(self, edit):
+		settings = sublime.load_settings("iDriftWeb.sublime-settings")
 		if get_gitconfig():
 			self.gitconfig = get_gitconfig()
 			self.gitconfig['company'] = 'iDrift Web AS'
@@ -28,8 +29,8 @@ class promt_headerCommand(sublime_plugin.TextCommand):
 		else:
 			self.gitconfig = {'name' : '', 'email' : '', 'company' : 'iDrift Web AS', 'copy' : '2012'}
 
-		if self.settings.has('name'):
-			name = self.settings.get('name')
+		if settings.has('name'):
+			name = settings.get('name')
 		else:
 			name = self.gitconfig['name']
 
@@ -37,9 +38,12 @@ class promt_headerCommand(sublime_plugin.TextCommand):
 		pass
 
 	def get_mail(self, text):
-		self.settings.set('name', text)
-		if self.settings.has('email'):
-			email = self.settings.get('email')
+		settings = sublime.load_settings("iDriftWeb.sublime-settings")
+		settings.set('name', text)
+		sublime.save_settings("iDriftWeb.sublime-settings")
+
+		if settings.has('email'):
+			email = settings.get('email')
 		else:
 			email = self.gitconfig['email']
 
@@ -47,9 +51,12 @@ class promt_headerCommand(sublime_plugin.TextCommand):
 		pass
 
 	def get_company(self, text):
-		self.settings.set('email', text)
-		if self.settings.has('company'):
-			company = self.settings.get('company')
+		settings = sublime.load_settings("iDriftWeb.sublime-settings")
+		settings.set('email', text)
+		sublime.save_settings("iDriftWeb.sublime-settings")
+
+		if settings.has('company'):
+			company = settings.get('company')
 		else:
 			company = self.gitconfig['company']
 
@@ -57,9 +64,12 @@ class promt_headerCommand(sublime_plugin.TextCommand):
 		pass
 
 	def get_copy(self, text):
-		self.settings.set('company', text)
-		if self.settings.has('copy'):
-			copy = self.settings.get('copy')
+		settings = sublime.load_settings("iDriftWeb.sublime-settings")
+		settings.set('company', text)
+		sublime.save_settings("iDriftWeb.sublime-settings")
+
+		if settings.has('copy'):
+			copy = settings.get('copy')
 		else:
 			copy = self.gitconfig['copy']
 
@@ -67,7 +77,8 @@ class promt_headerCommand(sublime_plugin.TextCommand):
 		pass
 
 	def on_done(self, text):
-		self.settings.set('copy', text)
+		settings = sublime.load_settings("iDriftWeb.sublime-settings")
+		settings.set('copy', text)
 		sublime.save_settings("iDriftWeb.sublime-settings")
 		pass
 
