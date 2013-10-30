@@ -21,7 +21,7 @@ class promt_headerCommand(sublime_plugin.WindowCommand):
 
 	def run(self):
 		try:
-			with open('data.json', 'rb') as fp:
+			with open('data.json', 'r') as fp:
 				self.settings = str(json.load(fp))
 		except IOError:
 			self.settings = get_gitconfig()
@@ -55,19 +55,15 @@ class insert_headerCommand(sublime_plugin.TextCommand):
 	def run(self, edit, contents = '${13}\n'):
 		self.contents = contents
 		try:
-			with open('data.json', 'rb') as fp:
+			with open('data.json', 'r') as fp:
 				self.settings = str(json.load(fp))
 				self.insert()
 		except IOError:
-			try:
-				with open('data.json', 'rb') as fp:
-					self.settings = json.load(fp)
-			except IOError:
-				self.settings = get_gitconfig()
-				self.settings['company'] = 'iDrift Web AS'
-				self.settings['copy'] = '2012'
-				self.view.window().show_input_panel("Name", self.settings['name'], self.get_mail, None, None)
-				pass
+			self.settings = get_gitconfig()
+			self.settings['company'] = 'iDrift Web AS'
+			self.settings['copy'] = '2012'
+			self.view.window().show_input_panel("Name", self.settings['name'], self.get_mail, None, None)
+			pass
 		pass
 
 	def get_mail(self, text):
