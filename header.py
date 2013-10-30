@@ -45,7 +45,7 @@ class promt_headerCommand(sublime_plugin.WindowCommand):
 		pass
 	def on_done(self, text):
 		self.settings['copy'] = text
-		with open('data.json', 'wb') as fp:
+		with open('data.json', 'w') as fp:
 			json.dump(self.settings, fp)
 
 class insert_headerCommand(sublime_plugin.TextCommand):
