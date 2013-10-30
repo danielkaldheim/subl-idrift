@@ -8,7 +8,7 @@
     "command": "promt_header"
   },
   {
-  	"caption": "Insert: functions.php",
-  	"command": "insert_functionsphp"
+    "caption": "Insert: functions.php",
+    "command": "insert_functionsphp"
   }
 ]
