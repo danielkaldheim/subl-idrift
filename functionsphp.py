@@ -9,5 +9,4 @@ class insert_functionsphpCommand(sublime_plugin.TextCommand):
 			with open('functionsphp.txt', 'r') as fp:
 				self.view.run_command('insert_header', {'contents' : fp.read() })
 		except IOError:
-			print 'bugger'
-		pass
+			pass
