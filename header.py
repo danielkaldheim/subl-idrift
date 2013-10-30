@@ -137,7 +137,7 @@ class insert_functionsphpCommand(sublime_plugin.TextCommand):
 		# self.view.set_syntax_file('../PHP/PHP.tmLanguage')
 
 		try:
-			with open('functionsphp.txt', 'rb') as fp:
+			with open('functionsphp.txt', 'r') as fp:
 				self.view.run_command('insert_header', {'contents' : fp.read() })
 		except IOError:
 			pass
