@@ -130,3 +130,14 @@ class insert_headerCommand(sublime_plugin.TextCommand):
 
 		snippet_content         = "%s%s%s%s%s%s%s%s%s%s%s%s%s" % (content_syntax_open, content_meta_open, content_comment, content_file, content_date, content_author, content_copy, content_version, content_meta_end, content_content, content_end_of_file, content_location, content_end)
 		self.view.run_command("insert_snippet", { "contents": snippet_content })
+
+class insert_functionsphpCommand(sublime_plugin.TextCommand):
+	def run(self, edit):
+		self.view.set_name('functions.php')
+		# self.view.set_syntax_file('../PHP/PHP.tmLanguage')
+
+		try:
+			with open('functionsphp.txt', 'r') as fp:
+				self.view.run_command('insert_header', {'contents' : fp.read() })
+		except IOError:
+			pass
