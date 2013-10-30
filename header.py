@@ -17,75 +17,48 @@ def get_gitconfig():
 
 class promt_headerCommand(sublime_plugin.WindowCommand):
 
-	settings = {'name' : '', 'email' : '', 'company' : 'iDrift Web AS', 'copy' : '2012'}
+	settings = sublime.load_settings("iDriftWeb.sublime-settings")
+	gitconfig = {'name' : '', 'email' : '', 'company' : 'iDrift Web AS', 'copy' : '2012'}
 
 	def run(self):
-		try:
-			with open('data.json', 'r') as fp:
-				self.settings = str(json.load(fp))
-		except IOError:
-			self.settings = get_gitconfig()
-			self.settings['company'] = 'iDrift Web AS'
-			self.settings['copy'] = '2012'
+		if get_gitconfig():
+		 	self.gitconfig = get_gitconfig()
+		 	self.gitconfig['company'] = 'iDrift Web AS'
+		 	self.gitconfig['copy'] = '2012'
 
-		self.window.show_input_panel("Name", self.settings['name'], self.get_mail, None, None)
+		self.window.show_input_panel("Name", self.settings.get('name', self.gitconfig['name']), self.get_mail, None, None)
 		pass
 
 	def get_mail(self, text):
-		self.settings['name'] = text
-		self.window.show_input_panel("Email", self.settings['email'], self.get_company, None, None)
+		self.settings.set('name', text)
+		self.window.show_input_panel("Email", self.settings.get('email', self.gitconfig['email']), self.get_company, None, None)
 		pass
 	def get_company(self, text):
-		self.settings['email'] = text
-		self.window.show_input_panel("Company", self.settings['company'], self.get_copy, None, None)
+		self.settings.set('email', text)
+		self.window.show_input_panel("Company", self.settings.get('company', self.gitconfig['company']), self.get_copy, None, None)
 		pass
 	def get_copy(self, text):
-		self.settings['company'] = text
-		self.window.show_input_panel("Copyright", self.settings['copy'], self.on_done, None, None)
+		self.settings.set('company', text)
+		self.window.show_input_panel("Copyright", self.settings.get('copy', self.gitconfig['copy']), self.on_done, None, None)
 		pass
 	def on_done(self, text):
-		self.settings['copy'] = text
-		with open('data.json', 'w') as fp:
-			json.dump(self.settings, fp)
+		self.settings.set('copy', text)
+		pass
 
 class insert_headerCommand(sublime_plugin.TextCommand):
-	settings = {'name' : '', 'email' : '', 'company' : 'iDrift Web AS', 'copy' : '2012'}
+	settings = sublime.load_settings("iDriftWeb.sublime-settings")
+	gitconfig = {'name' : '', 'email' : '', 'company' : 'iDrift Web AS', 'copy' : '2012'}
 	contents = ''
 
 	def run(self, edit, contents = '${13}\n'):
 		self.contents = contents
-		try:
-			with open('data.json', 'r') as fp:
-				self.settings = str(json.load(fp))
-				self.insert()
-		except IOError:
-			self.settings = get_gitconfig()
-			self.settings['company'] = 'iDrift Web AS'
-			self.settings['copy'] = '2012'
-			self.view.window().show_input_panel("Name", self.settings['name'], self.get_mail, None, None)
+		if self.settings.has('name'):
+			self.insert()
 			pass
+		else: 
+			self.view.run_command('promt_header')
 		pass
 
-	def get_mail(self, text):
-		self.settings['name'] = text
-		self.view.window().show_input_panel("Email", self.settings['email'], self.get_company, None, None)
-		pass
-
-	def get_company(self, text):
-		self.settings['email'] = text
-		self.view.window().show_input_panel("Company", self.settings['company'], self.get_copy, None, None)
-		pass
-
-	def get_copy(self, text):
-		self.settings['company'] = text
-		self.view.window().show_input_panel("Copyright", self.settings['copy'], self.on_done, None, None)
-		pass
-
-	def on_done(self, text):
-		self.settings['copy'] = text
-		with open('data.json', 'wb') as fp:
-			json.dump(self.settings, fp)
-		self.insert()
 
 	def insert(self):
 		now = datetime.datetime.now()
@@ -100,9 +73,9 @@ class insert_headerCommand(sublime_plugin.TextCommand):
 		content_comment         = " *	${1}\n"
 		content_file            = " *	${2:$TM_FILENAME}\n"
 		content_date            = " *	Created on ${3:${4:%d}.${5:%d}.${6:%d}}.\n *\n" % (now.day, now.month, now.year)
-		content_author          = " *	@author ${7:%s} <${8:%s}>\n" % (self.settings['name'], self.settings['email'])
-		if self.settings['copy']:
-			content_copy        = " *	@copyright ${9:%s} - ${10:%d} ${11:%s}\n" % (self.settings['copy'], now.year, self.settings['company'] if self.settings['company'] else self.settings['name'] )
+		content_author          = " *	@author ${7:%s} <${8:%s}>\n" % (self.settings.get('name'), self.settings.get('email'))
+		if self.settings.get('copy'):
+			content_copy        = " *	@copyright ${9:%s} - ${10:%d} ${11:%s}\n" % (self.settings.get('copy'), now.year, self.settings.get('company') if self.settings.get('company') else self.settings.get('name') )
 		else:
 			content_copy        = ""
 		content_version         = " *	@version ${12:1.0.0}\n"
