@@ -68,6 +68,7 @@ class promt_headerCommand(sublime_plugin.TextCommand):
 
 	def on_done(self, text):
 		self.settings.set('copy', text)
+		sublime.save_settings("iDriftWeb.sublime-settings")
 		pass
 
 class insert_headerCommand(sublime_plugin.TextCommand):
