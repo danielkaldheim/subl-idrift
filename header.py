@@ -22,7 +22,7 @@ class promt_headerCommand(sublime_plugin.WindowCommand):
 	def run(self):
 		try:
 			with open('data.json', 'rb') as fp:
-				self.settings = json.load(fp)
+				self.settings = str(json.load(fp))
 		except IOError:
 			self.settings = get_gitconfig()
 			self.settings['company'] = 'iDrift Web AS'
@@ -56,7 +56,7 @@ class insert_headerCommand(sublime_plugin.TextCommand):
 		self.contents = contents
 		try:
 			with open('data.json', 'rb') as fp:
-				self.settings = json.load(fp)
+				self.settings = str(json.load(fp))
 				self.insert()
 		except IOError:
 			try:
