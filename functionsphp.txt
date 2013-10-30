@@ -7,7 +7,7 @@ class ${14:Class_Name} {
 	 * @var object
 	 */
 
-	protected static $instance;
+	protected static \$instance;
 
 
 	/**
@@ -18,14 +18,14 @@ class ${14:Class_Name} {
 
 	public static function instance() {
 
-		if ( ! isset( self::$instance ) ) {
+		if ( ! isset( self::\$instance ) ) {
 
-			$className = __CLASS__;
-			self::$instance = new $className;
+			\$className = __CLASS__;
+			self::\$instance = new \$className;
 
 		}
 
-		return self::$instance;
+		return self::\$instance;
 
 	}
 
@@ -37,13 +37,13 @@ class ${14:Class_Name} {
 	public function __construct() {
 
 		// Setup theme
-		add_action( 'after_setup_theme', array( &$this, 'setup_theme' ) );
+		add_action( 'after_setup_theme', array( &\$this, 'setup_theme' ) );
 
 		// Enqueue frontend styles
-		add_action( 'wp', array( &$this, 'frontend_styles' ) );
+		add_action( 'wp', array( &\$this, 'frontend_styles' ) );
 
 		// Enqueue frontend scripts
-		add_action( 'wp_enqueue_scripts', array( &$this, 'frontend_scripts' ) );
+		add_action( 'wp_enqueue_scripts', array( &\$this, 'frontend_scripts' ) );
 
 	}
 
