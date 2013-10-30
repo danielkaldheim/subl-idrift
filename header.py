@@ -15,7 +15,7 @@ def get_gitconfig():
 	except IOError:
 		return 0
 
-class promt_headerCommand(sublime_plugin.WindowCommand):
+class promt_headerCommand(sublime_plugin.TextCommand):
 
 	settings = sublime.load_settings("iDriftWeb.sublime-settings")
 	gitconfig = {'name' : '', 'email' : '', 'company' : 'iDrift Web AS', 'copy' : '2012'}
@@ -26,21 +26,24 @@ class promt_headerCommand(sublime_plugin.WindowCommand):
 		 	self.gitconfig['company'] = 'iDrift Web AS'
 		 	self.gitconfig['copy'] = '2012'
 
-		self.window.show_input_panel("Name", self.settings.get('name', self.gitconfig['name']), self.get_mail, None, None)
+		self.view.window().show_input_panel("Name", self.settings.get('name', self.gitconfig['name']), self.get_mail, None, None)
 		pass
 
 	def get_mail(self, text):
 		self.settings.set('name', text)
-		self.window.show_input_panel("Email", self.settings.get('email', self.gitconfig['email']), self.get_company, None, None)
+		self.view.window().show_input_panel("Email", self.settings.get('email', self.gitconfig['email']), self.get_company, None, None)
 		pass
+
 	def get_company(self, text):
 		self.settings.set('email', text)
-		self.window.show_input_panel("Company", self.settings.get('company', self.gitconfig['company']), self.get_copy, None, None)
+		self.view.window().show_input_panel("Company", self.settings.get('company', self.gitconfig['company']), self.get_copy, None, None)
 		pass
+
 	def get_copy(self, text):
 		self.settings.set('company', text)
-		self.window.show_input_panel("Copyright", self.settings.get('copy', self.gitconfig['copy']), self.on_done, None, None)
+		self.view.window().show_input_panel("Copyright", self.settings.get('copy', self.gitconfig['copy']), self.on_done, None, None)
 		pass
+
 	def on_done(self, text):
 		self.settings.set('copy', text)
 		pass
@@ -55,7 +58,7 @@ class insert_headerCommand(sublime_plugin.TextCommand):
 		if self.settings.has('name'):
 			self.insert()
 			pass
-		else: 
+		else:
 			self.view.run_command('promt_header')
 		pass
 
