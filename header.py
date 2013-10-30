@@ -17,7 +17,6 @@ def get_gitconfig():
 
 class promt_headerCommand(sublime_plugin.TextCommand):
 
-
 	gitconfig = {}
 
 	def run(self, edit):
@@ -83,13 +82,13 @@ class promt_headerCommand(sublime_plugin.TextCommand):
 		pass
 
 class insert_headerCommand(sublime_plugin.TextCommand):
-	settings = sublime.load_settings("iDriftWeb.sublime-settings")
-	gitconfig = {'name' : '', 'email' : '', 'company' : 'iDrift Web AS', 'copy' : '2012'}
 	contents = ''
 
 	def run(self, edit, contents = '${13}\n'):
 		self.contents = contents
-		if self.settings.has('name'):
+		settings = sublime.load_settings("iDriftWeb.sublime-settings")
+
+		if settings.has('name'):
 			self.insert()
 			pass
 		else:
@@ -98,6 +97,8 @@ class insert_headerCommand(sublime_plugin.TextCommand):
 
 
 	def insert(self):
+
+		settings = sublime.load_settings("iDriftWeb.sublime-settings")
 		now = datetime.datetime.now()
 
 		pt = self.view.text_point(0, 0)
@@ -110,9 +111,9 @@ class insert_headerCommand(sublime_plugin.TextCommand):
 		content_comment         = " *	${1}\n"
 		content_file            = " *	${2:$TM_FILENAME}\n"
 		content_date            = " *	Created on ${3:${4:%d}.${5:%d}.${6:%d}}.\n *\n" % (now.day, now.month, now.year)
-		content_author          = " *	@author ${7:%s} <${8:%s}>\n" % (self.settings.get('name'), self.settings.get('email'))
-		if self.settings.get('copy'):
-			content_copy        = " *	@copyright ${9:%s} - ${10:%d} ${11:%s}\n" % (self.settings.get('copy'), now.year, self.settings.get('company') if self.settings.get('company') else self.settings.get('name') )
+		content_author          = " *	@author ${7:%s} <${8:%s}>\n" % (settings.get('name'), settings.get('email'))
+		if settings.get('copy'):
+			content_copy        = " *	@copyright ${9:%s} - ${10:%d} ${11:%s}\n" % (settings.get('copy'), now.year, settings.get('company') if settings.get('company') else settings.get('name') )
 		else:
 			content_copy        = ""
 		content_version         = " *	@version ${12:1.0.0}\n"
