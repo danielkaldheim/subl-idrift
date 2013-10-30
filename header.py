@@ -22,11 +22,11 @@ class promt_headerCommand(sublime_plugin.TextCommand):
 
 	def run(self, edit):
 		if get_gitconfig():
-		 	self.gitconfig = get_gitconfig()
-		 	self.gitconfig['company'] = 'iDrift Web AS'
-		 	self.gitconfig['copy'] = '2012'
-		 else:
-		 	gitconfig = {'name' : '', 'email' : '', 'company' : 'iDrift Web AS', 'copy' : '2012'}
+			self.gitconfig = get_gitconfig()
+			self.gitconfig['company'] = 'iDrift Web AS'
+			self.gitconfig['copy'] = '2012'
+		else:
+			gitconfig = {'name' : '', 'email' : '', 'company' : 'iDrift Web AS', 'copy' : '2012'}
 
 		self.view.window().show_input_panel("Name", self.settings.get('name', self.gitconfig['name'] if self.gitconfig['name'] else ' ' ), self.get_mail, None, None)
 		pass
