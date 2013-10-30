@@ -20,7 +20,7 @@ class promt_headerCommand(sublime_plugin.TextCommand):
 	settings = sublime.load_settings("iDriftWeb.sublime-settings")
 	gitconfig = {'name' : '', 'email' : '', 'company' : 'iDrift Web AS', 'copy' : '2012'}
 
-	def run(self):
+	def run(self, edit):
 		if get_gitconfig():
 		 	self.gitconfig = get_gitconfig()
 		 	self.gitconfig['company'] = 'iDrift Web AS'
