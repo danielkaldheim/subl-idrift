@@ -28,7 +28,7 @@ class promt_headerCommand(sublime_plugin.TextCommand):
 		else:
 			gitconfig = {'name' : '', 'email' : '', 'company' : 'iDrift Web AS', 'copy' : '2012'}
 
-		self.view.window().show_input_panel("Name", self.settings.get('name', self.gitconfig['name'] if self.gitconfig['name'] else ' ' ), self.get_mail, None, None)
+		self.view.window().show_input_panel("Name", "Test", self.get_mail, None, None)
 		pass
 
 	def get_mail(self, text):
