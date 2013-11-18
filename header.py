@@ -134,7 +134,9 @@ class insert_headerCommand(sublime_plugin.TextCommand):
 class insert_functionsphpCommand(sublime_plugin.TextCommand):
 
 	def run(self, edit):
-		self.view.set_name('functions.php')
+		if self.view.file_name():
+		else:
+			self.view.set_name('functions.php')
 
 		contents = """
 class ${14:Class_Name} {
