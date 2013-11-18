@@ -1,11 +1,12 @@
 <snippet>
 	<content><![CDATA[
-<?php while( \$${1:posts}->have_posts() ) : \$${1:posts}->the_post(); ?>
-${2:}
-<?php endwhile; ?>
+get_header(); ?>
+
+
+<?php get_footer();
 ]]></content>
 	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
-	<!-- <tabTrigger>hello</tabTrigger> -->
+	<tabTrigger>get_header</tabTrigger>
 	<!-- Optional: Set a scope to limit where the snippet will trigger -->
 	<scope>source.php</scope>
 </snippet>
