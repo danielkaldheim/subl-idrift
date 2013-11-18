@@ -134,6 +134,96 @@ class insert_headerCommand(sublime_plugin.TextCommand):
 class insert_functionsphpCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		self.view.set_name('functions.php')
+		content = """
+		class ${14:Class_Name} {
+
+			/**
+			 * Holds class instance
+			 *
+			 * @access protected
+			 * @var object
+			 */
+
+			protected static \$instance;
+
+
+			/**
+			 * Static Singleton Factory Method
+			 *
+			 * @return object
+			 */
+
+			public static function instance() {
+
+				if ( ! isset( self::\$instance ) ) {
+
+					\$className = __CLASS__;
+					self::\$instance = new \$className;
+
+				}
+
+				return self::\$instance;
+
+			}
+
+
+			/**
+			 * Initialize
+			 */
+
+			public function __construct() {
+
+				// Setup theme
+				add_action( 'after_setup_theme', array( &\$this, 'setup_theme' ) );
+
+				// Enqueue frontend styles
+				add_action( 'wp', array( &\$this, 'frontend_styles' ) );
+
+				// Enqueue frontend scripts
+				add_action( 'wp_enqueue_scripts', array( &\$this, 'frontend_scripts' ) );
+
+			}
+
+
+			/**
+			 * Setup theme
+			 */
+
+			public function setup_theme() {
+
+				// Code
+
+			}
+
+
+			/**
+			 * Enqueue frontend stylesheets
+			 */
+
+			public function frontend_styles() {
+
+				if( is_admin() )
+					return;
+
+				wp_enqueue_style( 'themename', THEME_URL . '/styles/style.less', array( 'normalize' ), NULL );
+
+			}
+
+
+			/**
+			 * Enqueue frontend scripts
+			 */
+
+			public function frontend_scripts() {
+
+				wp_enqueue_script( 'themename', THEME_URL . '/js/common.js', array('jquery'), NULL, true );
+
+			}
+
+		}
+
+		\$${14:Class_Name} = ${14:Class_Name}::instance();
+		"""
 		# self.view.set_syntax_file('../PHP/PHP.tmLanguage')
-		with open('functionsphp.txt', 'r') as fp:
-			self.view.run_command('insert_header', {'contents' : fp.read() })
+		# with open('functionsphp.txt', 'r') as fp:
+			self.view.run_command('insert_header', {'contents' : content })
