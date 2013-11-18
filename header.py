@@ -132,9 +132,11 @@ class insert_headerCommand(sublime_plugin.TextCommand):
 		self.view.run_command("insert_snippet", { "contents": snippet_content })
 
 class insert_functionsphpCommand(sublime_plugin.TextCommand):
+
 	def run(self, edit):
 		self.view.set_name('functions.php')
-		content = """
+
+		contents = """
 		class ${14:Class_Name} {
 
 			/**
@@ -224,4 +226,6 @@ class insert_functionsphpCommand(sublime_plugin.TextCommand):
 
 		\$${14:Class_Name} = ${14:Class_Name}::instance();
 		"""
-		self.view.run_command("insert_header", { "contents": content })
+
+		self.view.run_command("insert_header", { "contents": contents })
+
