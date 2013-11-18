@@ -224,5 +224,4 @@ class insert_functionsphpCommand(sublime_plugin.TextCommand):
 
 		\$${14:Class_Name} = ${14:Class_Name}::instance();
 		"""
-		# self.view.set_syntax_file('../PHP/PHP.tmLanguage')
-			self.view.run_command('insert_header', {'contents' : content })
+		self.view.run_command("insert_header", { "contents": content })
