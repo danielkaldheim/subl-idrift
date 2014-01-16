@@ -6,6 +6,7 @@ while( have_posts() ) : the_post();
 
 ?>
 
+${1:}
 
 <?php
 
