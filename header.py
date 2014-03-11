@@ -147,7 +147,11 @@ class insert_headerCommand(sublime_plugin.TextCommand):
 
 		content_end_of_file                = "%s End of file $2 %s\n" % (syntaxcommentcharspecial_open,syntaxcommentcharspecial_close)
 		if self.view.file_name():
-			content_location               = "%s Location: ${TM_FILEPATH} %s\n" % (syntaxcommentcharspecial_open, syntaxcommentcharspecial_close)
+			filepath = re.sub("(.+)(/content/.+$)", ".\\2", self.view.file_name())
+			if filepath:
+				content_location           = "%s Location: %s %s\n" % (syntaxcommentcharspecial_open, filepath, syntaxcommentcharspecial_close)
+			else:
+				content_location           = "%s Location: ${TM_FILEPATH} %s\n" % (syntaxcommentcharspecial_open, syntaxcommentcharspecial_close)
 		else:
 			content_location               = ""
 
