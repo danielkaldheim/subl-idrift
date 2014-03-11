@@ -106,27 +106,51 @@ class insert_headerCommand(sublime_plugin.TextCommand):
 		self.view.sel().add(sublime.Region(pt))
 		self.view.show(pt)
 
-		content_syntax_open     = "<?php\n"
-		content_meta_open       = "/**\n"
-		content_comment         = " *	${1}\n"
-		content_file            = " *	${2:$TM_FILENAME}\n"
-		content_date            = " *	Created on ${3:${4:%d}.${5:%d}.${6:%d}}.\n *\n" % (now.day, now.month, now.year)
-		content_author          = " *	@author ${7:%s} <${8:%s}>\n" % (settings.get('name'), settings.get('email'))
+		syntax = ""
+
+		synSearch = re.search("/([^\\/]+$)", self.view.settings().get('syntax'), re.I | re.S)
+		if synSearch:
+			syntax = re.sub(".tmLanguage", "", synSearch.group(1))
+
+		syntaxcommentchar                  = " *"
+		syntaxcommentcharspecial_open      = "/*"
+		syntaxcommentcharspecial_close     = "*/"
+		content_syntax_open                = ""
+		content_end                        = "\n"
+		content_meta_open                  = "/**\n"
+		content_meta_end                   = " *\n */\n\n"
+
+		if syntax == "PHP":
+			content_syntax_open                = "<?php\n"
+			content_end                        = "\n?>\n"
+		elif syntax == "JavaScript" or syntax == "LESS":
+			syntaxcommentchar              = "//"
+			syntaxcommentcharspecial_open  = "//"
+			syntaxcommentcharspecial_close = ""
+			content_syntax_open            = ""
+			content_end                    = ""
+			content_meta_open              = "//\n"
+			content_meta_end               = "\n\n"
+
+
+		content_comment                    = "%s	${1}\n" % syntaxcommentchar
+		content_file                       = "%s	${2:$TM_FILENAME}\n" % syntaxcommentchar
+		content_date                       = "%s	Created on ${3:${4:%d}.${5:%d}.${6:%d}}.\n%s\n" % (syntaxcommentchar, now.day, now.month, now.year, syntaxcommentchar)
+		content_author                     = "%s	@author ${7:%s} <${8:%s}>\n" % (syntaxcommentchar, settings.get('name'), settings.get('email'))
 		if settings.get('copy'):
-			content_copy        = " *	@copyright ${9:%s} - ${10:%d} ${11:%s}\n" % (settings.get('copy'), now.year, settings.get('company') if settings.get('company') else settings.get('name') )
+			content_copy                   = "%s	@copyright ${9:%s} - ${10:%d} ${11:%s}\n" % (syntaxcommentchar, settings.get('copy'), now.year, settings.get('company') if settings.get('company') else settings.get('name') )
 		else:
-			content_copy        = ""
-		content_version         = " *	@version ${12:1.0.0}\n"
-		content_meta_end        = " *\n */\n\n"
+			content_copy                   = ""
+		content_version                    = "%s	@version ${12:1.0.0}\n" % syntaxcommentchar
 
-		content_content         = "%s\n" % self.contents
+		content_content                    = "%s\n" % self.contents
 
-		content_end_of_file     = "/* End of file $2 */\n"
+		content_end_of_file                = "%s End of file $2 %s\n" % (syntaxcommentcharspecial_open,syntaxcommentcharspecial_close)
 		if self.view.file_name():
-			content_location    = "/* Location: ${TM_FILEPATH} */\n"
+			content_location               = "%s Location: ${TM_FILEPATH} %s\n" % (syntaxcommentcharspecial_open, syntaxcommentcharspecial_close)
 		else:
-			content_location    = ""
-		content_end             = "\n?>\n"
+			content_location               = ""
+
 
 		snippet_content         = "%s%s%s%s%s%s%s%s%s%s%s%s%s" % (content_syntax_open, content_meta_open, content_comment, content_file, content_date, content_author, content_copy, content_version, content_meta_end, content_content, content_end_of_file, content_location, content_end)
 		self.view.run_command("insert_snippet", { "contents": snippet_content })
