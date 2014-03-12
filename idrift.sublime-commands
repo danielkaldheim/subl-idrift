@@ -10,5 +10,9 @@
   {
     "caption": "Insert: functions.php",
     "command": "insert_functionsphp"
+  },
+  {
+    "caption": "Insert: bower.json",
+    "command": "insert_bowerjson"
   }
 ]

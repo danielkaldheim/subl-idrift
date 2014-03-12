@@ -257,3 +257,38 @@ class ${14:%s} {
 
 		self.view.run_command("insert_header", { "contents": contents })
 
+class insert_bowerjsonCommand(sublime_plugin.TextCommand):
+	def run(self, edit, name = 'Name'):
+		settings = sublime.load_settings("iDriftWeb.sublime-settings")
+		contents = """
+{
+  "name": "${1:%s}",
+  "version": "${2:1.0.0}",
+  "authors": [
+    "${3:${4:%s} <${5:%s}>}"
+  ],
+  "description": "${6:%s theme created by %s}",
+  "main": "${7:styles/style.less}",
+  "keywords": [
+    "${8:%s}",
+    "${9:%s}"
+  ],
+  "homepage": "http://${10}",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies" : {
+    "${11:bootstrap}": "${12:3.0.0}",
+    "${13:font-awesome}": "${14:latest}"
+  }
+}
+		""" % (name, settings.get('name'), settings.get('email'), name, settings.get('company'), name, settings.get('company'))
+
+		self.view.run_command("insert_snippet", { "contents": contents })
+
