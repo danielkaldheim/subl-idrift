@@ -1,10 +1,10 @@
 [
   {
-    "caption": "Header: Insert",
+    "caption": "Insert: Docblock header",
     "command": "insert_header"
   },
   {
-    "caption": "Header: Set settings",
+    "caption": "Set insert settings",
     "command": "promt_header"
   },
   {
