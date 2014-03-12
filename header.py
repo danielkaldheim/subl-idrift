@@ -235,7 +235,7 @@ class ${14:%s} {
 		if( is_admin() )
 			return;
 
-		wp_enqueue_style( '${15:$14}', THEME_URL . '/styles/style.less', array( 'normalize' ), NULL );
+		wp_enqueue_style( '${15:$14}', THEME_URL . '/styles/theme.less', array( 'normalize' ), NULL );
 
 	}
 
