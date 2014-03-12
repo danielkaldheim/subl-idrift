@@ -163,9 +163,9 @@ class insert_headerCommand(sublime_plugin.TextCommand):
 
 class insert_functionsphpCommand(sublime_plugin.TextCommand):
 
-	def run(self, edit):
+	def run(self, edit, className = 'Class_Name'):
 		contents = """
-class ${14:Class_Name} {
+class ${14:%s} {
 
 	/**
 	 * Holds class instance
@@ -187,8 +187,8 @@ class ${14:Class_Name} {
 
 		if ( ! isset( self::\$instance ) ) {
 
-			\$className = __CLASS__;
-			self::\$instance = new \$className;
+			\$this_class = __CLASS__;
+			self::\$instance = new \$this_class;
 
 		}
 
@@ -235,7 +235,7 @@ class ${14:Class_Name} {
 		if( is_admin() )
 			return;
 
-		wp_enqueue_style( 'themename', THEME_URL . '/styles/style.less', array( 'normalize' ), NULL );
+		wp_enqueue_style( '${15:$14}', THEME_URL . '/styles/style.less', array( 'normalize' ), NULL );
 
 	}
 
@@ -246,14 +246,14 @@ class ${14:Class_Name} {
 
 	public function frontend_scripts() {
 
-		wp_enqueue_script( 'themename', THEME_URL . '/js/common.js', array('jquery'), NULL, true );
+		wp_enqueue_script( '${15:$14}', THEME_URL . '/js/common.js', array('jquery'), NULL, true );
 
 	}
 
 }
 
-\$${14:Class_Name} = ${14:Class_Name}::instance();
-		"""
+\$$14 = $14::instance();
+		""" % className
 
 		self.view.run_command("insert_header", { "contents": contents })
 
