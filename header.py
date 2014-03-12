@@ -83,9 +83,11 @@ class promt_headerCommand(sublime_plugin.TextCommand):
 
 class insert_headerCommand(sublime_plugin.TextCommand):
 	contents = ''
+	comment = ''
 
-	def run(self, edit, contents = '${13}\n'):
+	def run(self, edit, contents = '', comment = ''):
 		self.contents = contents
+		self.comment = comment
 		settings = sublime.load_settings("iDriftWeb.sublime-settings")
 
 		if settings.has('name'):
@@ -133,7 +135,7 @@ class insert_headerCommand(sublime_plugin.TextCommand):
 			content_meta_end               = "\n\n"
 
 
-		content_comment                    = "%s	${1}\n" % syntaxcommentchar
+		content_comment                    = "%s	${1:%s}\n" % (syntaxcommentchar, self.comment)
 		content_file                       = "%s	${2:$TM_FILENAME}\n" % syntaxcommentchar
 		content_date                       = "%s	Created on ${3:${4:%d}.${5:%d}.${6:%d}}.\n%s\n" % (syntaxcommentchar, now.day, now.month, now.year, syntaxcommentchar)
 		content_author                     = "%s	@author ${7:%s} <${8:%s}>\n" % (syntaxcommentchar, settings.get('name'), settings.get('email'))
@@ -143,7 +145,7 @@ class insert_headerCommand(sublime_plugin.TextCommand):
 			content_copy                   = ""
 		content_version                    = "%s	@version ${12:1.0.0}\n" % syntaxcommentchar
 
-		content_content                    = "%s\n" % self.contents
+		content_content                    = "${13:%s}\n\n" % self.contents
 
 		content_end_of_file                = "%s End of file $2 %s\n" % (syntaxcommentcharspecial_open,syntaxcommentcharspecial_close)
 		if self.view.file_name():

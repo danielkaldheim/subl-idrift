@@ -2,10 +2,10 @@
 	<content><![CDATA[
 /*
 	Theme Name:     ${1:${TM_FILEPATH/.+(?:themes)\/([^\/]+)\/[^\/]*/\u$1/}}
-	Theme URI:      ${2:http://idrift.no/webutvikling/}
+	Theme URI:      ${2:http://webidrift.no/}
 	Description:    ${4:${5:$1 Wordpress theme} created by ${6:iDrift WEB}}
 	Author:         ${7:iDrift WEB}
-	Author URI:     ${8:http://idrift.no/webutvikling/}
+	Author URI:     ${8:http://webidrift.no/}
 	Version:        ${9:${10:1}.${11:0}.${12:0}}
 	Template:       ${13:wp-template}
 */
