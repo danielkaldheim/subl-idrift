@@ -235,7 +235,7 @@ class ${14:%s} {
 		if( is_admin() )
 			return;
 
-		wp_enqueue_style( '${15:$14}', THEME_URL . '/styles/theme.less', array( 'normalize' ), NULL );
+		wp_enqueue_style( '${15:$14}', THEME_URL . '/styles/theme.less', array(), NULL );
 
 	}
 
@@ -268,7 +268,7 @@ class insert_bowerjsonCommand(sublime_plugin.TextCommand):
     "${3:${4:%s} <${5:%s}>}"
   ],
   "description": "${6:%s theme created by %s}",
-  "main": "${7:styles/style.less}",
+  "main": "${7:styles/theme.less}",
   "keywords": [
     "${8:%s}",
     "${9:%s}"
